@@ -1,16 +1,16 @@
 # 4-BIT-RIPPLE-COUNTER
 
-*AIM:*
+**AIM:**
 
 To implement  4 Bit Ripple Counter using verilog and validating their functionality using their functional tables
 
-*SOFTWARE REQUIRED:*
+**SOFTWARE REQUIRED:**
 
 Quartus prime
 
-*THEORY*
+**THEORY**
 
-*4 Bit Ripple Counter*
+**4 Bit Ripple Counter**
 
 A binary ripple counter consists of a series connection of complementing flip-flops (T or JK type), with the output of each flip-flop connected to the Clock Pulse input of the next higher-order flip-flop. The flip-flop holding the least significant bit receives the incoming count pulses. The diagram of a 4-bit binary ripple counter is shown in Fig. below.
 
@@ -22,97 +22,62 @@ In timing diagram Q0 is changing as soon as the negative edge of clock pulse is 
 
 ![image](https://github.com/naavaneetha/4-BIT-RIPPLE-COUNTER/assets/154305477/85e1958a-2fc1-49bb-9a9f-d58ccbf3663c)
 
-*Procedure*
+**Procedure**
 
-Step 1:  Type the program in Quartus software.
+Type the program in Quartus software.
 
-Step 2:  Compile and run the program.
+Compile and run the program.
 
-Step 3:  Generate the RTL schematic and save the logic diagram.
+Generate the RTL schematic and save the logic diagram.
 
-Step 4:  Create nodes for inputs and outputs to generate the timing diagram.
+Create nodes for inputs and outputs to generate the timing diagram.
 
-Step 5:  For different input combinations generate the timing diagram
+For different input combinations generate the timing diagram.
 
-*PROGRAM*
-
-~
-/* Program for 4 Bit Ripple Counter and verify its truth table in quartus using Verilog programming.
-
-module exp12(
-   input wire clk,  // Clock input
-   output reg [3:0] count // 4-bit counter output
+**PROGRAM**
+```
+// 4-bit Ripple Carry Adder Module
+module assexp12 (
+    input [3:0] A, B,      // 4-bit Inputs: A and B
+    input Cin,             // Carry-in
+    output [3:0] Sum,      // 4-bit Sum output
+    output Cout            // Carry-out
 );
 
-// Counter logic
-always @(posedge clk) begin
-   if (count == 4'b1111) // Reset when count reaches 15
-       count <= 4'b0000;
-   else
-       count <= count + 1; // Increment count
-end
+    wire C1, C2, C3;       // Internal carry wires
 
-endmodule
+    // Instantiate 4 full adders
+    full_adder FA0 (A[0], B[0], Cin, Sum[0], C1);  // Least significant bit (LSB)
+    full_adder FA1 (A[1], B[1], C1, Sum[1], C2);
+    full_adder FA2 (A[2], B[2], C2, Sum[2], C3);
+    full_adder FA3 (A[3], B[3], C3, Sum[3], Cout); // Most significant bit (MSB)
 
-// Testbench
-module RippleCounter_tb;
+endmodule 
 
-// Inputs
-reg clk;
-
-// Outputs
-wire [3:0] count;
-
-// Instantiate the counter
-RippleCounter uut(
-   .clk(clk),
-   .count(count)
+// Full Adder Module
+module full_adder (
+    input A, B, Cin,       // Inputs: A, B, and Carry-in
+    output Sum, Cout       // Outputs: Sum and Carry-out
 );
 
-// Clock generation
-initial begin
-   clk = 0;
-   forever #5 clk = ~clk; // Toggle clock every 5 time units
-end
-
-// Stimulus
-initial begin
-   // Wait for a few clock cycles
-   #10;
-   
-   // Display header
-   $display("Time | Count");
-   $display("-----------------");
-   
-   // Functional table testing
-   // Increment count 16 times and display the count
-   repeat (16) begin
-       #5; // Wait for one clock cycle
-       $display("%4d | %b", $time, count);
-   end
-   
-   // End simulation
-   $finish;
-end
+    assign Sum = A ^ B ^ Cin;            // Sum = A ⊕ B ⊕ Cin
+    assign Cout = (A & B) | (Cin & (A ^ B)); // Cout = (A ⋅ B) + (Cin ⋅ (A ⊕ B))
 
 endmodule
-~
+```
 
- Developed by: KISHORE M
+ Developed by:KRIPAL R
  
- RegisterNumber: 24900763
+ RegisterNumber:212224040165
 
+**RTL LOGIC FOR 4 Bit Ripple Counter**
 
-*RTL LOGIC FOR 4 Bit Ripple Counter*
+![assexp12](https://github.com/user-attachments/assets/2a2f24c6-caae-4dcb-83f3-56b6ea67a93b)
 
-![Screenshot 2024-12-17 113602](https://github.com/user-attachments/assets/f10214be-f9b0-4d23-817e-c956888f39e7)
+**TIMING DIGRAMS FOR 4 Bit Ripple Counter**
 
+![Screenshot 2024-12-10 114947](https://github.com/user-attachments/assets/4424dd1b-8614-47d2-b9d0-8c613e9f5f7c)
 
-*TIMING DIGRAMS FOR 4 Bit Ripple Counter*
+**RESULTS**
 
-![Screenshot 2024-12-18 013357](https://github.com/user-attachments/assets/af782e34-c257-49e9-ba90-b4e8ae812f5c)
-
-*RESULTS*
-
-Thus,4 Bit Ripple Counter using verilog and validating their functionality using their functional tables
-is performed and verified.
+Thus 4 Bit Ripple Counter using verilog and validating their functionality using their functional tables are verified successfully.

@@ -66,9 +66,9 @@ module full_adder (
 endmodule
 ```
 
- Developed by:KRIPAL R
+ Developed by:ASWINTH BALAJI DS
  
- RegisterNumber:212224040165
+ RegisterNumber:212224050003
 
 **RTL LOGIC FOR 4 Bit Ripple Counter**
 
